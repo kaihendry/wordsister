@@ -1,12 +1,18 @@
 <?php
 
-// date_default_timezone_set('Europe/London');
+include("edit/persona.php");
+
+error_log("UPLOAD email set as:" . $email);
+date_default_timezone_set('UTC');
 umask(002);
+
+if (! valid($email)) {
+	die("Sorry $email does not have write permissions");
+}
 
 if (! is_uploaded_file($_FILES['f']['tmp_name'])) {
 	die("Upload fail: Missing file.");
 }
-
 
 $dir = getcwd();
 if (is_writable($dir)) {

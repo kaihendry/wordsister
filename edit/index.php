@@ -1,5 +1,6 @@
 <?php
 include("persona.php");
+include("login.php");
 
 $content = "../index.mdwn";
 $style = "../style.css";
@@ -14,14 +15,16 @@ if (isset($_REQUEST['q'])) {
 }
 
 if (valid($email)) {
-if (isset($_POST['style'])) {
-	file_put_contents($style, stripslashes($_POST['style']));
-}
-if (isset($_POST['content'])) {
-	file_put_contents($content, stripslashes($_POST['content']));
-	`cd .. && make`;
-	header("Location: http://" . $_SERVER["HTTP_HOST"] . '/' . dirname($content));
-}
+	if (isset($_POST['style'])) {
+		file_put_contents($style, stripslashes($_POST['style']));
+	}
+	if (isset($_POST['content'])) {
+		file_put_contents($content, stripslashes($_POST['content']));
+		`cd .. && make`;
+		header("Location: http://" . $_SERVER["HTTP_HOST"] . '/' . dirname($content));
+	}
+} else {
+	echo "Sorry $email does not have write permissions";
 }
 
 
@@ -81,6 +84,7 @@ navigator.id.watch({
 <?php if(file_exists("../upload.php")) { ?>
 <form id=upload action="/upload.php" method="post" enctype="multipart/form-data">
 <p>Upload a file</p>
+<input id="assertion-field2" type="hidden" name="assertion" value="">
 <input name="f" type="file" />
 <input value="Upload" type="submit">
 </form>

@@ -7,7 +7,7 @@ sucked, so I wrote this.
 
 1. It needs to be user friendly
 2. Inline [edit page][1] functionality needed
-3. Hosted on our domain
+3. Hosted on our doMANI
 
 ## Implementation
 
