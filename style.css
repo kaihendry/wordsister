@@ -1,6 +1,14 @@
 body  {
-	font-family: "Helvetica Neue", sans-serif;
+	font-family: serif;
 	margin: 3em;
 	font-size: 1.5em;
 
 }
+
+pre { text-align: center;      margin-left: auto;
+    margin-right: auto;
+    width: 17em; font-family: serif;}
+
+code { font-family: serif;}
+
+h1 { border: red solid solid thick; color: red; text-align: center}

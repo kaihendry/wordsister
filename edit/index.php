@@ -1,4 +1,6 @@
 <?php
+include("persona.php");
+
 $content = "../index.mdwn";
 $style = "../style.css";
 
@@ -7,6 +9,8 @@ if (isset($_REQUEST['q'])) {
 	@mkdir($content, 0777, true);
 	$content = "../" . $_REQUEST['q'] . "/index.mdwn";
 }
+
+if (valid($email)) {
 if (isset($_POST['style'])) {
 	file_put_contents($style, stripslashes($_POST['style']));
 }
@@ -15,14 +19,15 @@ if (isset($_POST['content'])) {
 	`cd .. && make`;
 	header("Location: http://" . $_SERVER["HTTP_HOST"] . '/' . dirname($content));
 }
+}
+
+
 ?>
 <!DOCTYPE html>
 <html>
 <head>
 <style>
-body {
-	font-family: "Helvetica Neue", sans-serif;
-}
+body { font-family: "Helvetica Neue", sans-serif; }
 textarea { width: 100%; height: 20em; }
 </style>
 <link rel="stylesheet" href="/pagedown/demo.css">
@@ -33,6 +38,26 @@ textarea { width: 100%; height: 20em; }
 <title>Editing <?php echo $content; ?></title>
 </head>
 <body>
+
+<form id="login-form" method="POST">
+  <input id="assertion-field" type="hidden" name="assertion" value="">
+</form>
+<?= $body ?>
+<script src="https://login.persona.org/include.js"></script>
+<script>
+navigator.id.watch({
+	loggedInUser: <?= $email ? "'$email'" : 'null' ?>,
+	onlogin: function (assertion) {
+		var assertion_field = document.getElementById("assertion-field");
+		assertion_field.value = assertion;
+		var login_form = document.getElementById("login-form");
+		login_form.submit();
+	},
+	onlogout: function () {
+		window.location = '?logout=1';
+	}
+});
+</script>
 
 <form method=post>
 <input type=submit value=Save>
