@@ -28,11 +28,7 @@ if (getAdmin() && isset($_POST['content'])) {
 body { font-family: "Helvetica Neue", sans-serif; }
 textarea { width: 100%; height: 20em; }
 </style>
-<link rel="stylesheet" href="/pagedown/demo.css">
-<script src="/pagedown/Markdown.Converter.js"></script>
-<script src="/pagedown/Markdown.Sanitizer.js"></script>
-<script src="/pagedown/Markdown.Editor.js"></script>
-<script src="/pagedown/jquery-1.9.1.min.js"></script>
+<script src="epiceditor/js/epiceditor.min.js"></script>
 <title>Editing <?php echo $content; ?></title>
 </head>
 <body>
@@ -49,13 +45,12 @@ if (is_dir_empty($cc)) {
 } else { die('<p>You dont have write permissions</p>'); }
 ?>
 
-<div class="wmd-panel">
-<div id="wmd-button-bar"></div>
-<textarea class="wmd-input" id="wmd-input" name="content">
+<div id="epiceditor">
+</div>
+
+<textarea id="markdown" name="content">
 <?php readfile($content); ?>
 </textarea>
-</div>
-<div id="wmd-preview" class="wmd-panel wmd-preview"></div>
 
 <textarea id="styleeditor" name=style>
 <?php readfile($style); ?>
@@ -72,9 +67,11 @@ if (is_dir_empty($cc)) {
 <?php } ?>
 
 <script>
-var converter1 = Markdown.getSanitizingConverter();
-var editor1 = new Markdown.Editor(converter1);
-editor1.run();
+var opts = {
+  container: 'epiceditor',
+  textarea: 'markdown'
+}
+var editor = new EpicEditor().load();
 </script>
 
 </body>
