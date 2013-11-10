@@ -20,6 +20,6 @@ if (is_writable($dir)) {
 }
 @mkdir($dir, 0777,true);
 move_uploaded_file($_FILES["f"]['tmp_name'], "$dir/" . $_FILES['f']['name']);
-header("Location: http://" . $_SERVER["HTTP_HOST"] . '/static/' . basename($dir));
+header("Location: http://" . $_SERVER["HTTP_HOST"] . '/static/' . basename($dir) . '/' . $_FILES['f']['name']);
 
 ?>
