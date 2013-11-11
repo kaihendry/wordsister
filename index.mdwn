@@ -42,6 +42,19 @@ Git clone to your [VirtualDocumentRoot directory](http://dabase.com/e/04025/), a
     # to help manage the line endings that PHP produces
     git config core.autocrlf input
 
+# Optional: nginx configuration
+
+	server {
+		server_name ws.dabase.com;
+		root /srv/www/ws.dabase.com;
+		index index.php index.html index.txt;
+		include cgi.conf;
+		location / {
+			if (!-e $request_filename){
+				rewrite ^/(.*)/edit$ /edit/index.php?q=$1 last; break;
+			}
+		}
+	}
 
 # Authorising editing
 
