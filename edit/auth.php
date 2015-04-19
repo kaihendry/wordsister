@@ -19,7 +19,9 @@ function getAdmin() {
 	} elseif (isset($_REQUEST['wordsister'])) {
 		$cookie_var = $_REQUEST['wordsister'];
 	} else { return false; }
-	$path = $cc . $cookie_var;
+	$cookie_var = preg_replace("/[^a-z0-9 ]/", '', $cookie_var);
+	if (empty($cookie_var)) { return false; }
+	$path = $cc . basename($cookie_var);
 	//error_log("got: " . $path);
 	if ( is_file($path) ) {
 		setAdmin($cookie_var);
