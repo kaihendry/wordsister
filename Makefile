@@ -9,7 +9,7 @@ build:
 	docker build -t $(REPO) .
 
 start:
-	docker run -d --name $(NAME) -v $(PWD)/www:/srv/http/ -v $(PWD)/logs:/var/log/nginx/ -p 8080:8080 $(REPO)
+	docker run -d --name $(NAME) -v $(PWD)/www:/srv/http/ -v $(PWD)/logs:/var/log/nginx/ -p 82:80 $(REPO)
 
 stop:
 	docker stop $(NAME)
