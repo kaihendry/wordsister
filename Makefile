@@ -1,16 +1,19 @@
-INFILES = $(shell find . -name "index.mdwn")
-OUTFILES = $(INFILES:.mdwn=.html)
+NAME=wordsister
+REPO=hendry/$(NAME)
 
-all: $(OUTFILES)
+.PHONY: start stop build sh
 
-%.html: %.mdwn footer.inc header.inc
-	@cat header.inc > $@
-	@# First seen comment becomes page title
-	@sed -n  '/<!--/{s/<!-- *//;s/ *-->//;p;q; }' $< >> $@
-	@echo "</title></head><body>" >> $@
-	@markdown $< >> $@
-	@cat footer.inc >> $@
-	@echo $< '→' $@
+all: build
 
-clean:
-	rm -f $(OUTFILES)
+build:
+	docker build -t $(REPO) .
+
+start:
+	docker run -d --name $(NAME) -v $(PWD)/www:/srv/http/ -v $(PWD)/logs:/var/log/nginx/ -p 81:80 $(REPO)
+
+stop:
+	docker stop $(NAME)
+	docker rm $(NAME)
+
+sh:
+	docker exec -it $(NAME) /bin/sh

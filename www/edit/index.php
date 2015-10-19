@@ -16,7 +16,7 @@ if (getAdmin() && isset($_POST['style'])) {
 }
 if (getAdmin() && isset($_POST['content'])) {
 	file_put_contents($content, stripslashes($_POST['content']));
-	`cd .. && make`;
+	$output = `cd .. && make`;
 	header("Location: http://" . $_SERVER["HTTP_HOST"] . '/' . dirname($content));
 }
 
